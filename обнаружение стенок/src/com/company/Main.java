@@ -3,13 +3,13 @@ package com.company;
 import java.util.Scanner;
 
 public class Main {
-    public static int[][] pole = new int[19][19];
-    public static int x2 = 9, y2 = 9, wall = 1;
+    public static int[][] pole = new int[9][9];
+    public static int x2 = 5, y2 = 5, wall = 1;
     Scanner sc = new Scanner(System.in);
 
     public static void out() {
-        for (int i = 0; i < 19; i++) {
-            for (int j = 0; j < 19; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 System.out.print(pole[j][i] + " ");
             }
             System.out.println();
@@ -132,35 +132,149 @@ public class Main {
 
     }
 
+    public static void cikl() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (pole[j][i] == 1) {
+                    zap(j, i);
+                }
+            }
+        }
+    }
+
+    public static void zap(int x, int y) {
+        int x1 = x, y1 = y;
+        try {
+            while (pole[x][y - 1] != 1) {
+                if (pole[x][y - 1] == 2) {
+                    y = y - 1;
+                }
+                y = y - 1;
+                if (pole[x][y]!=1){
+                    pole[x][y] = pole[x][y] + 3;
+                }
+            }
+        } catch (Exception e) {
+        }
+        x = x1;
+        y = y1;
+        try {
+            while (pole[x][y + 1] != 1) {
+                if (pole[x][y + 1] == 2) {
+                    y = y + 1;
+                }
+                y = y + 1;
+                if (pole[x][y]!=1){
+                    pole[x][y] = pole[x][y] + 3;
+                }
+
+
+            }
+        } catch (Exception e) {
+        }
+        x = x1;
+        y = y1;
+        try {
+            while (pole[x - 1][y] != 1) {
+                if (pole[x - 1][y] == 2) {
+                    x = x - 1;
+                }
+                x = x - 1;
+                if (pole[x][y]!=1){
+                    pole[x][y] = pole[x][y] + 3;
+                }
+            }
+        } catch (Exception e) {
+        }
+        x = x1;
+        y = y1;
+        try {
+            while (pole[x + 1][y] != 1) {
+                if (pole[x + 1][y] == 2) {
+                    x = x + 1;
+                }
+                x = x + 1;
+                if (pole[x][y]!=1){
+                    x = x + 1;
+                    pole[x][y] = pole[x][y] + 3;
+                }
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
+    public static boolean proverka(int x, int y) {
+        int x1 = x, y1 = y;
+        boolean t = true;
+        try {
+            while (pole[x][y - 1] != 1) {
+                y = y - 1;
+                if (pole[x][y] != 12|| pole[x][y]==1) {
+                    t = false;
+                }
+            }
+        } catch (Exception e) {
+        }
+        x = x1;
+        y = y1;
+        try {
+            while (pole[x][y + 1] != 1) {
+                y = y + 1;
+                if (pole[x][y] != 12|| pole[x][y]==1) {
+                    t = false;
+                }
+            }
+        } catch (Exception e) {
+        }
+        x = x1;
+        y = y1;
+        try {
+            while (pole[x - 1][y] != 1) {
+                x = x - 1;
+                if (pole[x][y] != 12|| pole[x][y]==1) {
+                    t = false;
+                }
+            }
+        } catch (Exception e) {
+        }
+        x = x1;
+        y = y1;
+        try {
+            while (pole[x + 1][y] != 1) {
+                x = x + 1;
+                if (pole[x][y] != 12|| pole[x][y]==1) {
+                    t = false;
+                }
+            }
+        } catch (Exception e) {
+        }
+
+
+        return t;
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        boolean t;
         pole[x2][y2] = 2;
-        pole[9][10] = 1;
-        wall=3;
-        int a,b,c;
-        a= sc.nextInt();
-        b= sc.nextInt();
-        c= sc.nextInt();
+        pole[4][5] = 1;
+        pole[6][6] = 1;
+        pole[5][4] = 1;
+        pole[5][6] = 1;
 
-        //pl1_hode();
+        cikl();
         out();
+        t = proverka(x2, y2);
+        if (t==false){
+            System.out.println("Игрок не в клетке");
+        }
+        else {
+            System.out.println("Игрок в клетке");
+        }
 
 
 
-
-
-        /*while (a != 5) {
-            a = sc.nextInt();
-            try{
-                pl2_hode(a);
-                out();
-            }
-            catch (Exception e){
-                  System.out.println("Игрок 2 победил");
-            }
-
-        }*/
 
     }
 }
