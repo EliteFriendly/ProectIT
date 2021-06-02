@@ -4,12 +4,13 @@ import java.util.Scanner;
 
 public class Main {
     public static int[][] pole = new int[9][9];
-    public static int x2 = 5, y2 = 5, wall = 1;
+    public static int x2 = 4, y2 = 4, wall = 1;
+    public static boolean t=false;
     Scanner sc = new Scanner(System.in);
 
     public static void out() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
                 System.out.print(pole[j][i] + " ");
             }
             System.out.println();
@@ -133,8 +134,8 @@ public class Main {
     }
 
     public static void cikl() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
                 if (pole[j][i] == 1) {
                     zap(j, i);
                 }
@@ -195,7 +196,6 @@ public class Main {
                 }
                 x = x + 1;
                 if (pole[x][y]!=1){
-                    x = x + 1;
                     pole[x][y] = pole[x][y] + 3;
                 }
             }
@@ -254,19 +254,79 @@ public class Main {
         return t;
     }
 
+    public static void find12(){
+        for (int i=0;i< pole.length;i++){
+            for (int j=0;j< pole.length;j++){
+                if (pole[j][i]==12){
+                    rec(j,i);
+
+
+                }
+            }
+        }
+    }
+
+    public static void rec(int x,int y){
+        if (pole[x+1][y]!=12&&pole[x+1][y]!=1&&pole[x+1][y]!=2) {
+            pole[x][y]=0;
+        }
+        if (pole[x][y+1]!=12&&pole[x][y+1]!=1&&pole[x][y+1]!=2){
+            pole[x][y]=0;
+        }
+        if (pole[x-1][y]!=12&&pole[x-1][y]!=1&&pole[x-1][y]!=2){
+            pole[x][y]=0;
+        }
+        if (pole[x][y-1]!=12&&pole[x][y-1]!=1&&pole[x][y-1]!=2){
+            pole[x][y]=0;
+        }
+
+
+            if (pole[x][y-1]==12&&pole[x][y]==0){
+                rec(x,y-1);
+            }
+            if (pole[x][y+1]==12&&pole[x][y]==0){
+                rec(x,y+1);
+            }
+            if (pole[x+1][y]==12&&pole[x][y]==0){
+                rec(x+1,y);
+            }
+            if (pole[x-1][y]==12&&pole[x][y]==0){
+                rec(x-1,y);
+            }
+
+
+
+
+
+    }
+
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        boolean t;
+        boolean t1;
         pole[x2][y2] = 2;
-        pole[4][5] = 1;
-        pole[6][6] = 1;
-        pole[5][4] = 1;
+        pole[3][2] = 1;
+        pole[4][2] = 1;
+        pole[5][2] = 1;
+
+        pole[6][3] = 1;
+        pole[6][4] = 1;
+        pole[6][5] = 1;
+
         pole[5][6] = 1;
+        pole[4][6] = 1;
+        pole[3][6] = 1;
+
+        pole[2][5] = 1;
+        pole[0][4] = 1;
+        pole[2][3] = 1;
 
         cikl();
+        find12();
         out();
-        t = proverka(x2, y2);
-        if (t==false){
+        System.out.println(t);
+        t1 = proverka(x2, y2);
+        if (t1==false){
             System.out.println("Игрок не в клетке");
         }
         else {
