@@ -270,9 +270,9 @@ public class Main {
                 pl1_hode(sc.nextInt(), sc.nextInt());
                 cikl();
                 find12();
-                out();
                 t1 = proverka(x2, y2);
                 clean();
+                out();
             }
         } catch (Exception e) {
             System.out.println("Кот сбежал");
