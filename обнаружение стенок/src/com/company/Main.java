@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class Main {
     public static int[][] pole = new int[9][9];
     public static int x2 = 4, y2 = 4, wall = 1;
-    public static boolean t=false;
-    Scanner sc = new Scanner(System.in);
+    public static boolean t = false;
+    public static Scanner sc = new Scanner(System.in);
 
     public static void out() {
         for (int i = 0; i < pole.length; i++) {
@@ -19,31 +19,31 @@ public class Main {
 
     public static void pl2_hode(int n) {
         boolean t = false;
-        while (t == true) {
+        while (t == false) {
             if (n == 1 && (pole[x2][y2 - 1]) == 0) {//вверх
                 pole[x2][y2] = 0;
-                y2 = y2 - 2;
+                y2 = y2 - 1;
                 pole[x2][y2] = 2;
                 t = true;
             }
 
             if (n == 2 && (pole[x2 + 1][y2]) == 0) {//вправо
                 pole[x2][y2] = 0;
-                x2 = x2 + 2;
+                x2 = x2 + 1;
                 pole[x2][y2] = 2;
                 t = true;
             }
 
             if (n == 3 && (pole[x2][y2 + 1]) == 0) {//вниз
                 pole[x2][y2] = 0;
-                y2 = y2 + 2;
+                y2 = y2 + 1;
                 pole[x2][y2] = 2;
                 t = true;
             }
 
             if (n == 4 && (pole[x2 - 1][y2]) == 0) {//влево
                 pole[x2][y2] = 0;
-                x2 = x2 - 2;
+                x2 = x2 - 1;
                 pole[x2][y2] = 2;
                 t = true;
             }
@@ -54,83 +54,24 @@ public class Main {
 
     }
 
-    public static void pl1_hode(int x1, int y1, int side, boolean end_hode) {
-
-
-        Scanner sc = new Scanner(System.in);
-        while (wall != 0 && end_hode == false) {
-
-            if (side == 1) {//поставить стенку вверх
-                if (pole[x1 * 2 - 1][y1 * 2 - 1 - 1] == 1) {
-                    System.out.println("Стенка уже поставлена");
-                    x1 = sc.nextInt();
-                    y1 = sc.nextInt();
-                    side = sc.nextInt();
-
-                } else {
-                    pole[x1 * 2 - 1][y1 * 2 - 1 - 1] = 1;
-                    wall = wall - 1;
-                    if (wall > 0) {
-                        System.out.println("Конец хода?");
-                        end_hode = sc.nextBoolean();
-                    }
-                }
-
-            }
-            if (side == 2) {//поставить стенку вправо
-                if (pole[x1 * 2 - 1 + 1][y1 * 2 - 1] == 1) {
-                    System.out.println("Стенка уже поставлена");
-                    x1 = sc.nextInt();
-                    y1 = sc.nextInt();
-                    side = sc.nextInt();
-
-                } else {
-                    pole[x1 * 2 - 1 + 1][y1 * 2 - 1] = 1;
-                    if (wall > 0) {
-                        System.out.println("Конец хода?");
-                        end_hode = sc.nextBoolean();
-                    }
-                }
-
-            }
-            if (side == 3) {//поставить стенку вниз
-                if (pole[x1 * 2 - 1][y1 * 2 - 1 + 1] == 1) {
-                    System.out.println("Стенка уже поставлена");
-                    x1 = sc.nextInt();
-                    y1 = sc.nextInt();
-                    side = sc.nextInt();
-
-                } else {
-                    pole[x1 * 2 - 1][y1 * 2 - 1 + 1] = 1;
-                    if (wall > 0) {
-                        System.out.println("Конец хода?");
-                        end_hode = sc.nextBoolean();
-                    }
-                }
-            }
-            if (side == 4) {//поставить стенку влево
-                if (pole[x1 * 2 - 1 - 1][y1 * 2 - 1] == 1) {
-                    System.out.println("Стенка уже поставлена");
-                    x1 = sc.nextInt();
-                    y1 = sc.nextInt();
-                    side = sc.nextInt();
-
-                } else {
-                    pole[x1 * 2 - 1 - 1][y1 * 2 - 1] = 1;
-                    if (wall > 0) {
-                        System.out.println("Конец хода?");
-                        end_hode = sc.nextBoolean();
-                    }
-
-                }
-            }
-
-        }
-        if (wall + 1 != 4) {
-            wall = wall + 1;
+    public static void pl1_hode(int x1, int y1) {
+        if (pole[x1][y1] == 1 || pole[x1][y1] == 2) {
+            System.out.println("Вы не можете сюда походить, введите координаты повторно");
+            pl1_hode(sc.nextInt(), sc.nextInt());
+        } else {
+            pole[x1][y1] = 1;
         }
 
+    }
 
+    public static void clean() {
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
+                if (pole[j][i] != 1 && pole[j][i] != 2) {
+                    pole[j][i] = 0;
+                }
+            }
+        }
     }
 
     public static void cikl() {
@@ -151,7 +92,7 @@ public class Main {
                     y = y - 1;
                 }
                 y = y - 1;
-                if (pole[x][y]!=1){
+                if (pole[x][y] != 1) {
                     pole[x][y] = pole[x][y] + 3;
                 }
             }
@@ -165,7 +106,7 @@ public class Main {
                     y = y + 1;
                 }
                 y = y + 1;
-                if (pole[x][y]!=1){
+                if (pole[x][y] != 1) {
                     pole[x][y] = pole[x][y] + 3;
                 }
 
@@ -181,7 +122,7 @@ public class Main {
                     x = x - 1;
                 }
                 x = x - 1;
-                if (pole[x][y]!=1){
+                if (pole[x][y] != 1) {
                     pole[x][y] = pole[x][y] + 3;
                 }
             }
@@ -195,7 +136,7 @@ public class Main {
                     x = x + 1;
                 }
                 x = x + 1;
-                if (pole[x][y]!=1){
+                if (pole[x][y] != 1) {
                     pole[x][y] = pole[x][y] + 3;
                 }
             }
@@ -210,7 +151,7 @@ public class Main {
         try {
             while (pole[x][y - 1] != 1) {
                 y = y - 1;
-                if (pole[x][y] != 12|| pole[x][y]==1) {
+                if (pole[x][y] != 12 || pole[x][y] == 1) {
                     t = false;
                 }
             }
@@ -221,7 +162,7 @@ public class Main {
         try {
             while (pole[x][y + 1] != 1) {
                 y = y + 1;
-                if (pole[x][y] != 12|| pole[x][y]==1) {
+                if (pole[x][y] != 12 || pole[x][y] == 1) {
                     t = false;
                 }
             }
@@ -232,7 +173,7 @@ public class Main {
         try {
             while (pole[x - 1][y] != 1) {
                 x = x - 1;
-                if (pole[x][y] != 12|| pole[x][y]==1) {
+                if (pole[x][y] != 12 || pole[x][y] == 1) {
                     t = false;
                 }
             }
@@ -243,7 +184,7 @@ public class Main {
         try {
             while (pole[x + 1][y] != 1) {
                 x = x + 1;
-                if (pole[x][y] != 12|| pole[x][y]==1) {
+                if (pole[x][y] != 12 || pole[x][y] == 1) {
                     t = false;
                 }
             }
@@ -254,11 +195,11 @@ public class Main {
         return t;
     }
 
-    public static void find12(){
-        for (int i=0;i< pole.length;i++){
-            for (int j=0;j< pole.length;j++){
-                if (pole[j][i]==12){
-                    rec(j,i);
+    public static void find12() {
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
+                if (pole[j][i] == 12) {
+                    rec(j, i);
 
 
                 }
@@ -266,75 +207,79 @@ public class Main {
         }
     }
 
-    public static void rec(int x,int y){
-        if (pole[x+1][y]!=12&&pole[x+1][y]!=1&&pole[x+1][y]!=2) {
-            pole[x][y]=0;
+    public static void rec(int x, int y) {
+        if (pole[x + 1][y] != 12 && pole[x + 1][y] != 1 && pole[x + 1][y] != 2) {
+            pole[x][y] = 0;
         }
-        if (pole[x][y+1]!=12&&pole[x][y+1]!=1&&pole[x][y+1]!=2){
-            pole[x][y]=0;
+        if (pole[x][y + 1] != 12 && pole[x][y + 1] != 1 && pole[x][y + 1] != 2) {
+            pole[x][y] = 0;
         }
-        if (pole[x-1][y]!=12&&pole[x-1][y]!=1&&pole[x-1][y]!=2){
-            pole[x][y]=0;
+        if (pole[x - 1][y] != 12 && pole[x - 1][y] != 1 && pole[x - 1][y] != 2) {
+            pole[x][y] = 0;
         }
-        if (pole[x][y-1]!=12&&pole[x][y-1]!=1&&pole[x][y-1]!=2){
-            pole[x][y]=0;
+        if (pole[x][y - 1] != 12 && pole[x][y - 1] != 1 && pole[x][y - 1] != 2) {
+            pole[x][y] = 0;
         }
 
 
-            if (pole[x][y-1]==12&&pole[x][y]==0){
-                rec(x,y-1);
-            }
-            if (pole[x][y+1]==12&&pole[x][y]==0){
-                rec(x,y+1);
-            }
-            if (pole[x+1][y]==12&&pole[x][y]==0){
-                rec(x+1,y);
-            }
-            if (pole[x-1][y]==12&&pole[x][y]==0){
-                rec(x-1,y);
-            }
-
-
-
+        if (pole[x][y - 1] == 12 && pole[x][y] == 0) {
+            rec(x, y - 1);
+        }
+        if (pole[x][y + 1] == 12 && pole[x][y] == 0) {
+            rec(x, y + 1);
+        }
+        if (pole[x + 1][y] == 12 && pole[x][y] == 0) {
+            rec(x + 1, y);
+        }
+        if (pole[x - 1][y] == 12 && pole[x][y] == 0) {
+            rec(x - 1, y);
+        }
 
 
     }
 
 
+    public static void help() {
+        System.out.println("Управление кота:");
+        System.out.println("1-вверх     2-вправо     3-вниз      4-влево");
+        System.out.println("Управление Стенкими:");
+        System.out.println("Вводите координаты постановик стены, но точка отсчета с левой верхней ячейки");
+        System.out.println("(Счет с нуля)");
+    }
+
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        boolean t1;
+
+        boolean t1 = false;
         pole[x2][y2] = 2;
-        pole[3][2] = 1;
-        pole[4][2] = 1;
-        pole[5][2] = 1;
 
-        pole[6][3] = 1;
-        pole[6][4] = 1;
-        pole[6][5] = 1;
-
-        pole[5][6] = 1;
-        pole[4][6] = 1;
-        pole[3][6] = 1;
-
-        pole[2][5] = 1;
-        pole[0][4] = 1;
-        pole[2][3] = 1;
-
-        cikl();
-        find12();
-        out();
-        System.out.println(t);
-        t1 = proverka(x2, y2);
-        if (t1==false){
-            System.out.println("Игрок не в клетке");
+        System.out.println("Обьяснить управление?(1-да, 2-нет)");
+        if (sc.nextInt() == 1) {
+            help();
+        } else {
+            System.out.println("Хорошей игры!");
         }
-        else {
-            System.out.println("Игрок в клетке");
+        try {
+            while (t1 == false) {
+                System.out.println("Ход кота");
+                System.out.println("Выберите направление");
+                pl2_hode(sc.nextInt());
+                out();
+                System.out.println("Ход стенки");
+                System.out.println("Введите координату");
+                pl1_hode(sc.nextInt(), sc.nextInt());
+                cikl();
+                find12();
+                out();
+                t1 = proverka(x2, y2);
+                clean();
+            }
+        } catch (Exception e) {
+            System.out.println("Кот сбежал");
         }
-
-
-
+        if (t1 == true) {
+            System.out.println("Кот в клетке");
+        }
 
     }
 }
